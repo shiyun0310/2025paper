@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>114年度醫事職類論文評選視覺化網頁</title>
+    <!-- 載入 Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 載入 Noto Sans TC 字體 -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* 設定全域字體 */
+        body {
+            font-family: 'Inter', 'Noto Sans TC', sans-serif;
+            background: linear-gradient(135deg, #fdfbf7 0%, #f4f0e6 100%);
+            color: #374151;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* 隱藏可收合內容，當被選中時才顯示 */
+        .collapsible-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease;
+            opacity: 0;
+        }
+        
+        .collapsible-toggle[aria-expanded="true"] + .collapsible-content {
+            max-height: 2000px; /* 足夠大的高度以容納內容 */
+            opacity: 1;
+        }
+
+        .collapsible-toggle[aria-expanded="true"] .arrow-icon {
+            transform: rotate(180deg);
+        }
+
+        .arrow-icon {
+            transition: transform 0.3s ease;
+        }
+
+        /* 自定義滾動條 */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #d1d5db; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #9ca3af; 
+        }
+    </style>
+</head>
+<body class="min-h-screen p-4 md:p-6 lg:p-10">
+
+    <div id="app" class="max-w-7xl mx-auto">
+        <!-- 標題區域 -->
+        <header class="text-center mb-10 md:mb-12 animate-fade-in-down">
+            <h1 class="text-5xl md:text-7xl font-extrabold mb-4 tracking-tight">
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-700 via-fuchsia-600 to-purple-700">114年度 醫事職類論文評選</span>
+            </h1>
+        </header>
+
+        <!-- 主要內容區域 (左右分欄) -->
+        <main class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            
+            <!-- 左側欄位: 活動資訊 (佔 4/12) -->
+            <aside class="lg:col-span-4 space-y-6">
+                
+                <!-- 📋 活動概述 -->
+                <div class="bg-white rounded-2xl shadow-lg border border-slate-100 overflow-hidden transform hover:-translate-y-1 transition-transform duration-300">
+                    <div class="bg-slate-50 p-4 border-b border-slate-100 flex items-center">
+                        <span class="text-2xl mr-3">📋</span>
+                        <h2 class="text-xl font-bold text-slate-800">活動概述</h2>
+                    </div>
+                    <div class="p-6 space-y-4">
+                        <!-- 目的 -->
+                        <div class="flex items-start space-x-3">
+                            <div class="bg-rose-50 p-2 rounded-lg text-rose-600 mt-1 shrink-0">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+                            </div>
+                            <div>
+                                <p class="text-sm font-bold text-slate-500 uppercase tracking-wide">目的</p>
+                                <p class="text-black leading-relaxed">
+                                    為鼓勵醫事人員積極參與醫學會活動，教學部特別舉辦本活動，以促進新知交流、提升學術品質，並展現個人專業價值。
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- 收錄期間 -->
+                        <div class="flex items-start space-x-3">
+                            <div class="bg-blue-50 p-2 rounded-lg text-blue-600 mt-1 shrink-0">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+                            </div>
+                            <div>
+                                <p class="text-sm font-bold text-slate-500 uppercase tracking-wide">收錄期間</p>
+                                <p class="text-black font-medium leading-relaxed">113年10月01日 ~ 114年09月30日</p>
+                            </div>
+                        </div>
+                        
+                        <!-- 對象 -->
+                        <div class="flex items-start space-x-3">
+                            <div class="bg-emerald-50 p-2 rounded-lg text-emerald-600 mt-1 shrink-0">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
+                            </div>
+                            <div>
+                                <p class="text-sm font-bold text-slate-500 uppercase tracking-wide">對象</p>
+                                <p class="text-black leading-relaxed">目前在職的各醫事職類以第一作者發表於各醫學會者。</p>
+                            </div>
+                        </div>
+
+                        <!-- 組別 -->
+                        <div class="flex items-start space-x-3">
+                            <div class="bg-purple-50 p-2 rounded-lg text-purple-600 mt-1 shrink-0">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.384-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" /></svg>
+                            </div>
+                            <div>
+                                <p class="text-sm font-bold text-slate-500 uppercase tracking-wide">組別</p>
+                                <p class="text-black leading-relaxed">
+                                    共7組，藥事組、醫事放射組、醫事檢驗組、護理組、營養組、呼吸治療組及聽力/物理治療/職能治療/臨床心理/語言治療組。
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 📅 發表會/海報展示區 -->
+                <div class="space-y-4">
+                    <!-- 論文發表會 卡片 -->
+                    <div class="bg-white p-5 rounded-2xl shadow-md border-l-4 border-red-500 relative overflow-hidden group">
+                        <div class="absolute right-0 top-0 opacity-10 transform translate-x-4 -translate-y-4 group-hover:scale-110 transition-transform">
+                            <span class="text-9xl">🎤</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-red-700 mb-2 flex items-center relative z-10">
+                            <span class="mr-2">🎤</span>論文發表會
+                        </h3>
+                        <p class="text-red-500 text-lg font-bold uppercase tracking-wider mb-3">★ 邀請各組第一名口頭分享 ★</p>
+                        <div class="text-black text-base space-y-1 relative z-10">
+                            <p><strong>日期:</strong> 12/19(五) 13:00~14:30</p>
+                            <p><strong>地點:</strong> 第五醫療大樓5樓 553 會議室</p>
+                            <p><strong>主持:</strong> 教師培育中心 郭進榮主任</p>
+                        </div>
+
+                        <!-- 新增學分區塊 -->
+                        <div class="mt-4 pt-3 border-t border-red-100 relative z-10">
+                            <p class="font-bold text-black mb-2 text-base">學分認證：</p>
+                            <ul class="text-black text-base space-y-1">
+                                <li class="flex items-start"><span class="mr-2 text-red-500">•</span>CFD核心課程10點</li>
+                                <li class="flex items-start"><span class="mr-2 text-red-500">•</span>科部外教學績效積分</li>
+                                <li class="flex items-start"><span class="mr-2 text-red-500">•</span>臨床教師認證B類「六大核心」1學分</li>
+                                <li class="flex items-start"><span class="mr-2 text-red-500">•</span>臨床教師認證「進階」1學分</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <!-- 海報張貼展示 卡片 -->
+                    <div class="bg-white p-5 rounded-2xl shadow-md border-l-4 border-amber-500 relative overflow-hidden group">
+                        <div class="absolute right-0 top-0 opacity-10 transform translate-x-4 -translate-y-4 group-hover:scale-110 transition-transform">
+                            <span class="text-9xl">🖼️</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-amber-700 mb-2 flex items-center relative z-10">
+                            <span class="mr-2">🖼️</span>海報張貼展示
+                        </h3>
+                        <p class="text-amber-500 text-lg font-bold uppercase tracking-wider mb-3">★ 共 39 篇獲獎論文同步展出 ★</p>
+                        <div class="text-black text-base space-y-1 relative z-10">
+                            <p><strong>期間:</strong> 12/16 – 12/31</p>
+                            <p><strong>地點:</strong> 第五醫療大樓 5 樓展示區</p>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- 右側欄位: 查詢與名單總覽 (佔 8/12) -->
+            <div class="lg:col-span-8 space-y-8">
+                
+                <!-- 🏅 受獎通知與意願回覆 -->
+                <div class="bg-white rounded-2xl shadow-xl border border-slate-100 overflow-hidden">
+                    <div class="bg-gradient-to-r from-fuchsia-600 to-purple-700 p-6 text-white relative overflow-hidden">
+                        <div class="absolute -right-10 -top-10 opacity-20">
+                            <span class="text-9xl">🏅</span>
+                        </div>
+                        <h2 class="text-2xl font-bold flex items-center relative z-10">
+                            <span class="bg-white/20 p-2 rounded-lg mr-3 backdrop-blur-sm">🏅</span>
+                            受獎通知與查詢
+                        </h2>
+                        <p class="mt-2 text-fuchsia-100 relative z-10 max-w-xl leading-relaxed">
+                            恭喜您於本次論文評選中表現優異！<br>
+                            請使用下方表單查詢您的獲獎狀態並回覆出席意願。
+                        </p>
+                    </div>
+
+                    <div class="p-6 md:p-8">
+                        <!-- 通知細節 -->
+                        <div class="bg-red-50 border border-red-100 rounded-xl p-5 mb-8 flex flex-col md:flex-row gap-4 items-start">
+                            <div class="bg-red-100 text-red-600 p-3 rounded-full shrink-0">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" /></svg>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-red-800 text-2xl mb-3">誠摯邀請獲獎者共同出席受獎</h4>
+                                <ul class="text-black space-y-2 text-lg">
+                                    <li class="flex items-start md:items-center"><span class="w-16 font-bold text-black shrink-0">會議:</span> 12月份醫學教育委員會議</li>
+                                    <li class="flex items-start md:items-center"><span class="w-16 font-bold text-black shrink-0">日期:</span> <span class="font-bold text-red-600">12/10(三) 12:20</span></li>
+                                    <li class="flex items-start md:items-center"><span class="w-16 font-bold text-black shrink-0">集合:</span> 第五醫療大樓5樓 552 會議室外</li>
+                                    <li class="flex items-start md:items-center"><span class="w-16 font-bold text-black shrink-0">備註:</span> 請穿著工作服</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- 查詢表單 -->
+                        <form id="awardForm" class="space-y-4 mb-6">
+                            <label for="personnelId" class="block text-lg font-bold text-slate-700 tracking-wide">
+                                請輸入獲獎者人事號，回覆是否能出席受獎
+                            </label>
+                            <div class="flex flex-col sm:flex-row gap-3">
+                                <input type="text" id="personnelId" name="personnelId" required
+                                       class="flex-1 p-3.5 border border-slate-300 rounded-xl text-lg focus:outline-none focus:ring-2 focus:ring-fuchsia-500 focus:border-fuchsia-500 transition-shadow bg-slate-50 focus:bg-white"
+                                       placeholder="例如: A12345">
+                                <button type="submit"
+                                        class="px-8 py-3.5 bg-fuchsia-600 text-white font-bold rounded-xl hover:bg-fuchsia-700 active:bg-fuchsia-800 transition-colors shadow-lg shadow-fuchsia-200 flex items-center justify-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+                                    查詢資料
+                                </button>
+                            </div>
+                        </form>
+
+                        <!-- 查詢結果顯示區域 -->
+                        <div id="searchResult" class="hidden rounded-xl border p-5 transition-all duration-300">
+                            <!-- JS 動態填入 -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 🎉 獲獎名單總覽 -->
+                <div class="bg-white rounded-2xl shadow-xl border border-slate-100 overflow-hidden">
+                    <div class="p-6 border-b border-slate-100 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-slate-50/50">
+                        <div>
+                            <h2 class="text-2xl font-bold text-slate-800 flex items-center">
+                                <span class="text-2xl mr-2">🎉</span> 獲獎名單總覽
+                            </h2>
+                            <p class="text-slate-500 mt-1 text-lg">點擊下方組別名稱展開詳細名單</p>
+                        </div>
+                        <div class="bg-white px-4 py-2 rounded-full border border-slate-200 text-lg font-bold text-slate-600 shadow-sm">
+                            共 39 篇獲獎論文
+                        </div>
+                    </div>
+                    
+                    <div id="awardsContainer" class="p-6 space-y-3 bg-white">
+                        <!-- 名單將由 JavaScript 動態插入此處 -->
+                        <div class="animate-pulse space-y-3">
+                            <div class="h-14 bg-slate-100 rounded-xl"></div>
+                            <div class="h-14 bg-slate-100 rounded-xl"></div>
+                            <div class="h-14 bg-slate-100 rounded-xl"></div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+
+        <!-- 頁尾樣式調整：改為深米色底色 -->
+        <footer class="mt-16 text-center text-slate-700 text-base py-8 bg-[#e0d6c8] rounded-2xl shadow-sm">
+            <div class="space-y-2">
+                <p class="font-bold">如有疑問請來電或來信詢問，謝謝</p>
+                <p>
+                    <a href="mailto:b20715@mail.chimei.org.tw" class="hover:text-fuchsia-700 transition-colors font-medium">📧 b20715@mail.chimei.org.tw</a>
+                </p>
+                <p class="font-medium">📞 06-2812811 分機 57439 教學部 詩芸</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- JavaScript 邏輯 -->
+    <script>
+        // Apps Script 部署網址 (已更新為最新版本)
+        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx69XAVQROov5SVcn7i9H4GSvIn0DroV9ne04O_naZYqcs-usSfUe5-8LeZrZti6mOa/exec';
+        
+        // 組別樣式設定 (新增 highlight 顏色)
+        const groupStyles = {
+            "藥事組": { bg: "bg-red-50", hover: "hover:bg-red-100", border: "border-red-200", text: "text-red-800", badge: "bg-red-100 text-red-700", highlight: "text-red-600" },
+            "醫事放射組": { bg: "bg-amber-50", hover: "hover:bg-amber-100", border: "border-amber-200", text: "text-amber-800", badge: "bg-amber-100 text-amber-700", highlight: "text-amber-600" },
+            "醫事檢驗組": { bg: "bg-emerald-50", hover: "hover:bg-emerald-100", border: "border-emerald-200", text: "text-emerald-800", badge: "bg-emerald-100 text-emerald-700", highlight: "text-emerald-600" },
+            "護理組": { bg: "bg-blue-50", hover: "hover:bg-blue-100", border: "border-blue-200", text: "text-blue-800", badge: "bg-blue-100 text-blue-700", highlight: "text-blue-600" },
+            "營養組": { bg: "bg-purple-50", hover: "hover:bg-purple-100", border: "border-purple-200", text: "text-purple-800", badge: "bg-purple-100 text-purple-700", highlight: "text-purple-600" },
+            "呼吸治療組": { bg: "bg-orange-50", hover: "hover:bg-orange-100", border: "border-orange-200", text: "text-orange-800", badge: "bg-orange-100 text-orange-700", highlight: "text-orange-600" },
+            "聽力/物理治療/職能治療/臨床心理/語言治療組": { bg: "bg-slate-50", hover: "hover:bg-slate-100", border: "border-slate-200", text: "text-slate-800", badge: "bg-slate-200 text-slate-700", highlight: "text-slate-600" }
+        };
+
+        // 完整獲獎資料 (用於預設展示列表，實際搜尋透過 GAS)
+        const allAwardsData = [
+            { id: "961108", group: "藥事組", rank: "第一名", bonus: "4000元", dept: "藥劑部", author: "李美娟", position: "小組長", thesis: "藥師利用「A+藥師」系統優化臨床藥事照護的效能" },
+            { id: "560904", group: "藥事組", rank: "第二名", bonus: "3000元", dept: "藥劑部", author: "傅柏憲", position: "藥師", thesis: "運用自動化流程機器人改善管制藥品管理作業 – 以某醫學中心為例" },
+            { id: "920422", group: "藥事組", rank: "第三名", bonus: "2000元", dept: "藥劑部", author: "朱麗鈴", position: "總藥師", thesis: "應用 Power BI 於醫院數據管理之成效評估" },
+            { id: "961108", group: "藥事組", rank: "佳作", bonus: "1000元", dept: "藥劑部", author: "李美娟", position: "小組長", thesis: "藥師介入降低常規手術後抗血栓藥物遺漏加回的比例" },
+            { id: "940833", group: "藥事組", rank: "佳作", bonus: "1000元", dept: "藥劑部", author: "徐秉裕", position: "組長", thesis: "建置住院處方電子審核系統之成效初探" },
+            { id: "A61232", group: "藥事組", rank: "佳作", bonus: "1000元", dept: "藥劑部", author: "許晉瑋", position: "藥師", thesis: "Effectiveness and Safety of BEAC vs BEAM Conditioning Regimens in Lymphoma Patients: A Systematic Review and Meta-Analysis" },
+            { id: "A208F1", group: "藥事組", rank: "佳作", bonus: "1000元", dept: "藥劑部", author: "花逸茗", position: "藥師", thesis: "系統性文獻回顧與統合分析：探討Tenofovir alafenamide用於慢性B型肝炎患者其血脂數據的影響" },
+            { id: "950924", group: "藥事組", rank: "佳作", bonus: "1000元", dept: "藥劑部", author: "吳佳璇", position: "組長", thesis: "分析兩種PARP抑制劑治療卵巢癌之安全性評估" },
+            { id: "840931", group: "醫事放射組", rank: "第一名", bonus: "4000元", dept: "放射診斷科急重症影像組", author: "黃建中", position: "組長", thesis: "奇美醫院醫事放射職類全人照護教學成效分析探" },
+            { id: "A20413", group: "醫事放射組", rank: "第二名", bonus: "3000元", dept: "放射腫瘤部", author: "黃知瑩", position: "醫事放射師", thesis: "探討以記憶床值輔助乳癌對位幫助之經驗分享" },
+            { id: "860642", group: "醫事放射組", rank: "第三名", bonus: "2000元", dept: "放射診斷科電腦斷層磁振造影組", author: "鍾佳鵬", position: "醫事放射師", thesis: "利用靜息態功能性磁振造影(rsf MRI)研究預防治療對慢性偏頭痛患者大腦結構和功能的影響" },
+            { id: "810641", group: "醫事放射組", rank: "佳作", bonus: "1000元", dept: "影像醫學部", author: "么煥忠", position: "技術主任", thesis: "The Role of Information Systems in Preventing Allergic Reactions to Contrast Medium and Evaluating Adverse Incidents in MRI" },
+            { id: "990422", group: "醫事檢驗組", rank: "第一名", bonus: "4000元", dept: "臨床病理部", author: "周修音", position: "組長", thesis: "導入AI智能判讀系統 BD Urine Culture App之臨床效能與準確度分析" },
+            { id: "B30331", group: "醫事檢驗組", rank: "第二名", bonus: "3000元", dept: "臨床病理部", author: "陳靜如", position: "組長", thesis: "The clinical value of HLA antibody testing in strategies for kidney transplant patients" },
+            { id: "B10550", group: "醫事檢驗組", rank: "第三名", bonus: "2000元", dept: "精準醫學核心實驗室", author: "洪孟芸", position: "高階(Ⅱ)醫檢師", thesis: "The Role of ALK IHC in the Era of Advanced Molecular Diagnostics for NSCLC" },
+            { id: "B10108", group: "醫事檢驗組", rank: "佳作", bonus: "1000元", dept: "臨床病理部", author: "謝佳倫", position: "中階(Ⅱ)醫檢師", thesis: "優化抗酸菌染色流程：高價數螢光染色結果省略Ziehl-Neelsen染色法複染之可行性評估" },
+            { id: "B20206", group: "醫事檢驗組", rank: "佳作", bonus: "1000元", dept: "臨床病理部", author: "黃靜妍", position: "初階醫檢師", thesis: "Assessment of Glucose Meter Acurracy in Hospital" },
+            { id: "990129", group: "醫事檢驗組", rank: "佳作", bonus: "1000元", dept: "精準醫學核心實驗室", author: "邱意珊", position: "醫學專員", thesis: "A Novel MET Intron 13 Mutation Associated with Exon 14 Skipping: A Case Study of Multi-Platform Testing" },
+            { id: "B00628", group: "醫事檢驗組", rank: "佳作", bonus: "1000元", dept: "精準醫學核心實驗室", author: "詹坤振", position: "高階(Ⅰ)醫檢師", thesis: "Development and validation of an LC–MS/MS method for quantitation of myo-inositol in human plasma" },
+            { id: "8407B2", group: "護理組", rank: "第一名", bonus: "4000元", dept: "護理部", author: "徐富美", position: "督導", thesis: "產前衛教地圖有聲書" },
+            { id: "930969", group: "護理組", rank: "第二名", bonus: "3000元", dept: "護理部", author: "李穎俐", position: "督導", thesis: "以使用者為中心的慢性傷口管理系統，支持團隊整合與病人參與" },
+            { id: "920429", group: "護理組", rank: "第三名", bonus: "2000元", dept: "9A病房", author: "楊禮謙", position: "護理長", thesis: "提升整合病房高齡譫妄照護成效" },
+            { id: "840626", group: "護理組", rank: "佳作", bonus: "1000元", dept: "護理部", author: "李怡珍", position: "督導", thesis: "Predicting Surgical Patients’Risk of Pressure Injuries Using Artificial Intelligence: A Preliminary Analysis" },
+            { id: "A60564", group: "護理組", rank: "佳作", bonus: "1000元", dept: "護理部", author: "邱旅揚", position: "護理師(N4)", thesis: "Developing a Portable \"Learning Portfolio\": An Initial Exploration of e-Portfolio for the Two-Year Post Graduate Nurse Training Program" },
+            { id: "A60564", group: "護理組", rank: "佳作", bonus: "1000元", dept: "護理部", author: "邱旅揚", position: "護理師(N4)", thesis: "運用POWER BI數位視覺化工具展現護理教育與師資培育教學成效之探討" },
+            { id: "B00787", group: "護理組", rank: "佳作", bonus: "1000元", dept: "護理部", author: "陳岑佩", position: "專員", thesis: "EXPLORING THE LIVED EXPERIENCES OF DEMENTIA PATIENTS PARTICIPATING IN THE DIVERSITY CREATIVE PROGRAM: A MIXED-METHODS STUDY" },
+            { id: "9903J7", group: "護理組", rank: "佳作", bonus: "1000元", dept: "9B病房", author: "魏嘉慧", position: "護理長(N4)", thesis: "基層護理主管工作壓力、因應策略與職業疲勞之關係研究" },
+            { id: "960906", group: "護理組", rank: "佳作", bonus: "1000元", dept: "3B加護病房", author: "李耘青", position: "高階護理師(N4)", thesis: "運用MOREA2F組合式照護提升加護科系譫妄照護品質" },
+            { id: "911032", group: "護理組", rank: "佳作", bonus: "1000元", dept: "3B加護病房", author: "蔡瓊慧", position: "高階護理師(N4)", thesis: "體外與常規性心肺復甦對到院前心肺功能停止之神經系統影響：系統性文獻回顧與統合分析" },
+            { id: "B40328", group: "營養組", rank: "第一名", bonus: "4000元", dept: "營養科", author: "吳政彥", position: "營養師(D2)", thesis: "比較重症患者不同灌食方法之臨床療效：以試驗序貫分析執行之更新系統性文獻回顧及統合分析" },
+            { id: "A91111", group: "營養組", rank: "第二名", bonus: "3000元", dept: "營養科", author: "趙苔君", position: "營養師(D4)", thesis: "術後加速康復(ERAS）對大腸直腸癌患者術後腸道併發症的影響及其相關因素分析" },
+            { id: "A91186", group: "營養組", rank: "第三名", bonus: "2000元", dept: "營養科", author: "吳宜", position: "營養師(D2)", thesis: "台南某醫學中心體重管理門診結合醫病共享決策之減重成果分析" },
+            { id: "960326", group: "營養組", rank: "佳作", bonus: "1000元", dept: "營養科", author: "王逸婷", position: "代理組長", thesis: "第一型糖尿伴有酮酸中毒非持續營養照護四年追蹤結果-病例報告" },
+            { id: "B00736", group: "營養組", rank: "佳作", bonus: "1000元", dept: "營養科", author: "林珈汶", position: "營養師(D4)", thesis: "CGM應用在營養配方探討之個案報告" },
+            { id: "920709", group: "呼吸治療組", rank: "第一名", bonus: "4000元", dept: "呼吸治療科", author: "高麗婷", position: "呼吸治療師(RRT2)", thesis: "台灣慢性阻塞性肺疾病患者伴有睡眠疾病發生車禍意外相關危險因子之探討" },
+            { id: "990645", group: "呼吸治療組", rank: "第二名", bonus: "3000元", dept: "呼吸治療科", author: "曾桂玲", position: "呼吸治療師(RRT3)", thesis: "Prognostic Analysis of Palliative Extubation in Long-Term Mechanically Ventilated Patients" },
+            { id: "B00045", group: "聽力/物理治療/職能治療/臨床心理/語言治療組", rank: "第一名", bonus: "4000元", dept: "復健部語言治療組", author: "蔡宜庭", position: "語言治療師", thesis: "使用TheraBite口腔閉合訓練器於牙關緊閉的頭頸癌患者的成效:系統性回顧及統合分析" },
+            { id: "B20349", group: "聽力/物理治療/職能治療/臨床心理/語言治療組", rank: "第二名", bonus: "3000元", dept: "樹林院區", author: "謝珮妍", position: "臨床心理師", thesis: "結構化考核表與AI整合提升臨床心理教學效果之探索性研究" },
+            { id: "B10119", group: "聽力/物理治療/職能治療/臨床心理/語言治療組", rank: "第三名", bonus: "2000元", dept: "復健部物理治療組", author: "李依庭", position: "組長", thesis: "骨盆帶問卷在繁體中文族群的跨文化適應性及信效度驗證" }
+        ];
+
+        // 資料分組函式
+        function groupAwards(data) {
+            return data.reduce((acc, award) => {
+                const groupName = award.group;
+                if (!acc[groupName]) acc[groupName] = [];
+                acc[groupName].push(award);
+                return acc;
+            }, {});
+        }
+
+        // 渲染名單函式
+        function renderAwards(data) {
+            const grouped = groupAwards(data);
+            const container = document.getElementById('awardsContainer');
+            container.innerHTML = ''; 
+
+            Object.keys(grouped).forEach((groupName, index) => {
+                const groupAwards = grouped[groupName];
+                const styles = groupStyles[groupName] || { bg: "bg-gray-50", hover: "hover:bg-gray-100", border: "border-gray-200", text: "text-gray-800", badge: "bg-gray-200 text-gray-700", highlight: "text-gray-600" };
+                
+                const groupHtml = `
+                    <div class="border ${styles.border} rounded-xl overflow-hidden transition-all duration-300 hover:shadow-md">
+                        <button class="collapsible-toggle w-full p-4 flex justify-between items-center text-left ${styles.bg} ${styles.hover} transition-colors focus:outline-none"
+                                aria-expanded="false" 
+                                onclick="toggleCollapsible(this)">
+                            <div class="flex items-center gap-3">
+                                <span class="w-1.5 h-6 rounded-full ${styles.text.replace('text', 'bg')}"></span>
+                                <h3 class="text-xl font-bold ${styles.text}">
+                                    ${groupName}
+                                </h3>
+                                <span class="text-sm font-semibold px-2.5 py-0.5 rounded-full bg-white/60 text-gray-600 border border-gray-100">${groupAwards.length} 篇</span>
+                            </div>
+                            <svg class="arrow-icon w-6 h-6 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </button>
+                        
+                        <div class="collapsible-content bg-white">
+                            <div class="divide-y divide-gray-100">
+                                ${groupAwards.map(award => {
+                                    let medalIcon = '';
+                                    let rankClass = 'text-gray-600 bg-gray-100';
+                                    if(award.rank.includes('第一名')) { medalIcon = '🥇'; rankClass = 'text-yellow-700 bg-yellow-100'; }
+                                    else if(award.rank.includes('第二名')) { medalIcon = '🥈'; rankClass = 'text-gray-700 bg-slate-200'; }
+                                    else if(award.rank.includes('第三名')) { medalIcon = '🥉'; rankClass = 'text-amber-800 bg-amber-100'; }
+                                    else { medalIcon = '🎖️'; rankClass = 'text-fuchsia-700 bg-fuchsia-50'; }
+
+                                    return `
+                                    <div class="p-5 hover:bg-slate-50 transition-colors group">
+                                        <div class="flex flex-col md:flex-row md:justify-between md:items-start gap-3">
+                                            <div class="flex-1">
+                                                <div class="flex items-center flex-wrap gap-2 mb-2">
+                                                    <span class="inline-flex items-center px-3 py-1 rounded text-sm font-bold ${rankClass}">
+                                                        ${medalIcon} ${award.rank}
+                                                    </span>
+                                                    <!-- 獎金樣式修正：使用組別顏色 -->
+                                                    <span class="inline-block md:hidden px-3 py-1 rounded-full text-sm font-bold ${styles.badge} border border-opacity-20">
+                                                        獎金 ${award.bonus}
+                                                    </span>
+                                                </div>
+                                                <h4 class="text-xl font-bold text-slate-800 leading-snug group-hover:text-fuchsia-700 transition-colors mb-2">
+                                                    ${award.thesis}
+                                                </h4>
+                                                <div class="flex flex-wrap items-center gap-4 text-base md:text-lg text-slate-500">
+                                                    <span class="flex items-center gap-1">
+                                                        <svg class="w-5 h-5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
+                                                        <!-- 移除括號 -->
+                                                        ${award.author} <span class="text-slate-400 text-sm">${award.position}</span>
+                                                    </span>
+                                                    <span class="flex items-center gap-1">
+                                                        <svg class="w-5 h-5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>
+                                                        ${award.dept}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="shrink-0 hidden md:block">
+                                                <!-- 獎金樣式修正：使用組別顏色 -->
+                                                <span class="inline-block px-3 py-1 rounded-full text-sm font-bold ${styles.badge} border border-opacity-20">
+                                                    獎金 ${award.bonus}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                `}).join('')}
+                            </div>
+                        </div>
+                    </div>
+                `;
+                container.insertAdjacentHTML('beforeend', groupHtml);
+            });
+        }
+
+        // 摺疊選單切換
+        function toggleCollapsible(button) {
+            const isExpanded = button.getAttribute('aria-expanded') === 'true';
+            button.setAttribute('aria-expanded', !isExpanded);
+        }
+
+        // 顯示查詢結果
+        function displaySearchResults(results) {
+            const resultDiv = document.getElementById('searchResult');
+            resultDiv.classList.remove('hidden', 'bg-red-50', 'border-red-200', 'bg-green-50', 'border-green-200', 'bg-yellow-50', 'border-yellow-200');
+            resultDiv.innerHTML = '';
+            
+            if (!results || results.length === 0) {
+                resultDiv.classList.add('block', 'bg-yellow-50', 'border-yellow-200');
+                resultDiv.innerHTML = `
+                    <div class="flex items-center gap-3 text-yellow-800">
+                        <svg class="w-8 h-8 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+                        <div>
+                            <p class="font-bold text-xl">查無資料</p>
+                            <p class="text-lg opacity-80">請檢查您輸入的人事號碼是否正確。</p>
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+
+            const totalCount = results.length;
+            const authorNames = [...new Set(results.map(r => r.作者))].join('、');
+            
+            resultDiv.classList.add('block', 'bg-green-50', 'border-green-200');
+            resultDiv.innerHTML = `
+                <div class="mb-4 flex items-center gap-2 text-green-800 border-b border-green-200 pb-2">
+                    <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    <p class="font-bold text-xl">查詢成功！${authorNames}，您共有 ${totalCount} 筆獲獎資訊：</p>
+                </div>
+                <div class="space-y-4">
+                    ${results.map(data => {
+                        const style = groupStyles[data.組別] || { border: "border-gray-200", text: "text-gray-800", badge: "bg-gray-100 text-gray-600", highlight: "text-gray-600" };
+                        
+                        let actionArea = '';
+                        if (data.status && data.status.trim() !== '') {
+                            // 已有回覆狀態，顯示狀態文字
+                            let statusColor = 'text-gray-700';
+                            let statusIcon = '';
+                            let displayStatusText = data.status; // 預設使用資料庫的狀態
+
+                            if (data.status.includes('不克')) {
+                                statusColor = 'text-red-600 bg-red-50 border-red-100';
+                                statusIcon = '❌';
+                            } else {
+                                // 若狀態是正向的，統一顯示為「可出席」
+                                statusColor = 'text-green-600 bg-green-50 border-green-100';
+                                statusIcon = '✅';
+                                if (displayStatusText === '出席' || displayStatusText === '可出席') displayStatusText = '可出席';
+                            }
+
+                            actionArea = `
+                                <div class="mt-4 pt-4 border-t border-gray-100 flex justify-end items-center">
+                                    <div class="px-4 py-2 rounded-lg border ${statusColor} flex items-center shadow-sm">
+                                        <span class="mr-2 text-xl">${statusIcon}</span>
+                                        <span class="text-lg font-bold">您已回覆：${displayStatusText}</span>
+                                    </div>
+                                </div>
+                            `;
+                        } else {
+                            // 尚未回覆，顯示按鈕
+                            actionArea = `
+                                <div class="mt-4 pt-4 border-t border-gray-100 flex flex-wrap gap-3 justify-end">
+                                    <button onclick="updateAttendance('${data.人事號}', '可出席', this)" class="text-base font-medium text-white bg-green-600 hover:bg-green-700 px-6 py-2.5 rounded-lg transition-colors shadow-sm flex items-center disabled:opacity-50">
+                                        <svg class="w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+                                        我可以出席領獎
+                                    </button>
+                                    <button onclick="updateAttendance('${data.人事號}', '不克出席', this)" class="text-base font-medium text-slate-600 bg-slate-100 hover:bg-slate-200 border border-slate-200 px-6 py-2.5 rounded-lg transition-colors flex items-center disabled:opacity-50">
+                                        <svg class="w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                                        不克出席領獎
+                                    </button>
+                                </div>
+                            `;
+                        }
+
+                        return `
+                            <div class="bg-white p-5 rounded-xl border-l-8 shadow-md ${style.border.replace('border', 'border-l')}">
+                                <div class="flex justify-between items-start mb-2">
+                                    <div class="flex items-center gap-2">
+                                        <!-- 組別與排名樣式統一 -->
+                                        <span class="text-lg font-bold px-3 py-1 rounded bg-slate-50 border border-gray-200 ${style.text}">${data.組別}</span>
+                                        <span class="text-lg font-bold px-3 py-1 rounded bg-slate-50 border border-gray-200 ${style.text}">${data.rank}</span>
+                                    </div>
+                                    <!-- 獎金樣式修正：使用組別顏色 -->
+                                    <span class="font-bold text-xl ${style.highlight}">獎金 ${data.獎金}</span>
+                                </div>
+                                <h4 class="text-2xl font-bold text-slate-800 mb-2 leading-tight">${data.論文名稱}</h4>
+                                <div class="flex flex-wrap items-center gap-3 text-lg text-slate-600 mb-4">
+                                    <span>${data.科別}</span>
+                                    <span class="text-slate-300">•</span>
+                                    <!-- 移除括號 -->
+                                    <span class="font-medium">${data.作者} ${data.職稱}</span>
+                                </div>
+                                ${actionArea}
+                            </div>
+                        `;
+                    }).join('')}
+                </div>
+            `;
+        }
+
+        // 新增：處理回覆出席意願的函式
+        async function updateAttendance(personnelId, status, btnElement) {
+            // 防止重複點擊
+            if (btnElement.disabled) return;
+            const originalText = btnElement.innerHTML;
+            btnElement.disabled = true;
+            btnElement.innerHTML = `<svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-current" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> 處理中...`;
+
+            try {
+                // 建構 POST 請求的 body，使用 x-www-form-urlencoded 格式
+                const formData = new URLSearchParams();
+                formData.append('action', 'updateAttendance');
+                formData.append('personnelId', personnelId);
+                formData.append('status', status);
+
+                const response = await fetch(APPS_SCRIPT_URL, {
+                    method: 'POST',
+                    body: formData,
+                    // mode: 'cors' // GAS doPost 通常需要 cors，或 no-cors 但無法讀取回應。建議保留預設或 cors
+                });
+
+                if (!response.ok) throw new Error('Network response was not ok');
+                
+                const result = await response.json();
+
+                if (result.success) {
+                    alert(`✅ 已成功登記：${status}`);
+                    // 重新查詢以更新介面顯示 (取代直接操作 DOM，確保資料一致性)
+                    // 或者直接操作 DOM 隱藏按鈕顯示狀態文字
+                    // 這裡為了簡單直接替換按鈕區域為狀態文字
+                    const parentDiv = btnElement.closest('.mt-4'); // 找到按鈕容器
+                    
+                    let statusColor = 'text-gray-700';
+                    let statusIcon = '';
+                    if (status.includes('不克')) {
+                        statusColor = 'text-red-600 bg-red-50 border-red-100';
+                        statusIcon = '❌';
+                    } else {
+                        statusColor = 'text-green-600 bg-green-50 border-green-100';
+                        statusIcon = '✅';
+                    }
+
+                    parentDiv.innerHTML = `
+                        <div class="px-4 py-2 rounded-lg border ${statusColor} flex items-center shadow-sm">
+                            <span class="mr-2 text-xl">${statusIcon}</span>
+                            <span class="text-lg font-bold">您已回覆：${status}</span>
+                        </div>
+                    `;
+                    // 修改對齊方式為 flex items-center (如果父層是 flex justify-end)
+                    parentDiv.classList.add('items-center');
+
+                } else {
+                    alert(`❌ 登記失敗：${result.message}`);
+                    btnElement.disabled = false;
+                    btnElement.innerHTML = originalText;
+                }
+
+            } catch (error) {
+                console.error('Error:', error);
+                alert('❌ 連線錯誤，請稍後再試。');
+                btnElement.disabled = false;
+                btnElement.innerHTML = originalText;
+            }
+        }
+
+        // 處理表單提交
+        async function handleFormSubmit(event) {
+            event.preventDefault();
+            const personnelId = document.getElementById('personnelId').value;
+            const resultDiv = document.getElementById('searchResult');
+            const inputId = String(personnelId).toUpperCase().trim();
+
+            if (!inputId) return;
+
+            // Loading 狀態
+            resultDiv.classList.remove('hidden', 'bg-red-50', 'bg-green-50', 'bg-yellow-50');
+            resultDiv.classList.add('block', 'bg-slate-50', 'border-slate-200');
+            resultDiv.innerHTML = `
+                <div class="flex items-center justify-center p-4 text-fuchsia-600">
+                    <svg class="animate-spin -ml-1 mr-3 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+                    <span class="font-bold">資料查詢中，請稍候...</span>
+                </div>
+            `;
+
+            const url = `${APPS_SCRIPT_URL}?personnelId=${encodeURIComponent(inputId)}`;
+            const MAX_RETRIES = 3;
+
+            for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
+                try {
+                    const response = await fetch(url, {
+                        method: 'GET',
+                        mode: 'cors',
+                        credentials: 'omit'
+                    });
+
+                    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+
+                    const json = await response.json();
+                    
+                    if (json.success && json.data) {
+                        displaySearchResults(json.data);
+                        return;
+                    } else {
+                        displaySearchResults(null);
+                        return;
+                    }
+
+                } catch (error) {
+                    console.error(`Attempt ${attempt} failed:`, error);
+                    if (attempt === MAX_RETRIES) {
+                        resultDiv.classList.remove('bg-slate-50');
+                        resultDiv.classList.add('bg-red-50', 'border-red-200');
+                        resultDiv.innerHTML = `
+                            <div class="p-2 text-red-700">
+                                <p class="font-bold">❌ 連線失敗</p>
+                                <p class="text-sm mt-1">無法連接到資料庫。請確認網路連線或稍後再試。</p>
+                                <p class="text-xs text-gray-500 mt-2">如果您是開發者：請檢查 Google Apps Script 的 CORS 設定或權限。</p>
+                            </div>
+                        `;
+                        return;
+                    }
+                    await new Promise(resolve => setTimeout(resolve, 1500));
+                }
+            }
+        }
+
+        // 初始化
+        window.onload = function() {
+            renderAwards(allAwardsData);
+            const form = document.getElementById('awardForm');
+            if (form) {
+                form.addEventListener('submit', handleFormSubmit);
+            }
+        };
+    </script>
+</body>
+</html>
